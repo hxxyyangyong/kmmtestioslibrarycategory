@@ -16,7 +16,6 @@ object SimulatorHelp {
         val firstid = ((runtimesJson["runtimes"] as ArrayList<Any>).filter {
             (it as Map<String,Any>)["platform"]?.equals("iOS") == true
         }.first() as Map<String,Any>)["identifier"]
-        println("执行测试的模拟器===identifier:$firstid")
         val devicesShell = "xcrun simctl list devices --json".execute()
         val devicesJsonStr = devicesShell.text()
         val devicesJson = groovy.json.JsonSlurper().parseText(devicesJsonStr) as Map<String, Any>
@@ -36,8 +35,8 @@ object SimulatorHelp {
                 break
             }
         }
-        println("执行测试的模拟器===UDID:$deviceId")
-        println("执行测试的模拟器===Name:$name")
+        println("simulator ===UDID:$deviceId")
+        println("simulator ===Name:$name")
         return Pair(name,deviceId)
     }
 }

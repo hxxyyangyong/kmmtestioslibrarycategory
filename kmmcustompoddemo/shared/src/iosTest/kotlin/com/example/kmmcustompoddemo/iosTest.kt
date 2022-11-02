@@ -16,9 +16,10 @@ class IosGreetingTest {
     fun calctTwoDate() {
         println("Test:"+TTDemo.callTTDemoCategoryMethod())
         println("Test2:"+TTDemo.callNSStrigCategoryMethod())
-        println("Test3:"+DebugLibrary.debugCategoryMethod())
-        assertTrue(TTDemo.callTTDemoCategoryMethod() == "TTDemo+kmm categoryMethod","Call TTDemo Categote Method Error")
-        assertTrue(TTDemo.callNSStrigCategoryMethod() == "NSString+kmm","Call NSString Categote Method Error")
+        println("Test3:"+DebugLibrary.debugCategoryMethod())//Library Call NSString Categote Method Error
+        assertTrue(TTDemo.callTTDemoCategoryMethod() == "TTDemo+kmm categoryMethod","Framework Call TTDemo Categote Method Error")
+        assertTrue(TTDemo.callNSStrigCategoryMethod() == "NSString+kmm","Framework Call NSString Categote Method Error")
+        assertTrue(TTDemo.callNSStrigCategoryMethod() == "libraryStringCategory","Library Call NSString Categote Method Error")
     }
 
 
