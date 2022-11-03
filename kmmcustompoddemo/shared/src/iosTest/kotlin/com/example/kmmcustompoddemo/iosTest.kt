@@ -20,11 +20,11 @@ class IosGreetingTest {
     fun calctTwoDate() {
         println("Test1:"+TTDemo.callTTDemoCategoryMethod())//It is OK for the class in the framework to indirectly call the category method of its own class
         println("Test2:"+TTDemo.callNSStrigCategoryMethod())//It is OK for a class in the framework to indirectly call the category method of other classes
-        println("Test2:"+TTDemo.categoryMethod())//It is OK for a class in the framework to Directly call the category method of of its own class
-        println("Test2:"+NSString.kmmString())//It is OK for a class in the framework to Directly call the category method of other classes
+        println("Test3:"+TTDemo.categoryMethod())//It is OK for a class in the framework to Directly call the category method of of its own class
+        println("Test4:"+NSString.kmmString())//It is OK for a class in the framework to Directly call the category method of other classes
         //-----
-        println("Test3"+ DebugLibrary.debugCategoryMethod())//❌The class in .a indirectly calls the category method of other classes and throws an exception
-        println("Test4"+ NSString.libraryStringCategory())//❌Directly calling the category method of the class in .a also throws an exception
+        println("Test5"+ DebugLibrary.debugCategoryMethod())//❌The class in .a indirectly calls the category method of other classes and throws an exception
+        println("Test6"+ NSString.libraryStringCategory())//❌Directly calling the category method of the class in .a also throws an exception
         //----
         assertTrue(TTDemo.callTTDemoCategoryMethod() == "TTDemo+kmm categoryMethod","Framework Call TTDemo Category Method Error")
         assertTrue(TTDemo.callNSStrigCategoryMethod() == "NSString+kmm","Framework Call NSString Category Method Error")
