@@ -38,6 +38,10 @@ kotlin {
             getTest(org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG).apply {
                 linkerOpts("-framework", "DebugFramework","-F${fRootPath}/yytestpod/yytestpod/Classes")
                 linkerOpts("-L${fRootPath}/yytestpod/yytestpod/Classes/library","-lDebugLibrary")
+//                linkerOpts("-F${fRootPath}/yytestpod/yytestpod/Classes/library")
+//                linkerOpts("libraries","libDebugLibrary.a")
+//                linkerOpts("libraryPaths","${fRootPath}/yytestpod/yytestpod/Classes/library")
+//                linkerOpts("-rpath","${fRootPath}/yytestpod/yytestpod/Classes/library")
             }
         }
         it.compilations["main"].kotlinOptions.freeCompilerArgs += listOf(
@@ -109,11 +113,11 @@ gradle.taskGraph.whenReady {
                 doLast {
                     val taskSuffix = this.name.replace("generateDef", "", false)
                     val headers = when (taskSuffix) {
-                        "Yytestpod" -> "TTDemo.h DebugLibrary.h"// TTDemo+kmm.h NSString+kmm.h"
+                        "Yytestpod" -> "TTDemo.h DebugLibrary.h NSString+librarykmm.h TTDemo+kmm.h NSString+kmm.h"
                         else -> ""
                     }
                     val compilerOpts = when (taskSuffix) {
-                        "Yytestpod" -> "compilerOpts = -I${buildDir}/cocoapods/synthetic/IOS/Pods/yytestpod/yytestpod/Classes/DebugFramework.framework/Headers"
+                        "Yytestpod" -> "compilerOpts = -I${buildDir}/cocoapods/synthetic/IOS/Pods/yytestpod/yytestpod/Classes/DebugFramework.framework/Headers -I${buildDir}/cocoapods/synthetic/IOS/Pods/yytestpod/yytestpod/Classes/library/include/DebugLibrary"
                         else -> ""
                     }
                     outputFile.writeText(
