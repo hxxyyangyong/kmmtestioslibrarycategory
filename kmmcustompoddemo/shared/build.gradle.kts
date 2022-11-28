@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin.Companion.findKaptConfiguration
+
 plugins {
     kotlin("multiplatform") version "1.7.20"
     kotlin("native.cocoapods") version "1.7.20"
@@ -23,7 +25,7 @@ kotlin {
             url("https://github.com/hxxyyangyong/yyspec.git")
         }
         pod("yytestpod"){
-            version = "0.1.5"
+            version = "0.1.11"
         }
         useLibraries()
     }
@@ -36,12 +38,9 @@ kotlin {
         it.binaries {
             val fRootPath = "${buildDir}/cocoapods/synthetic/IOS/Pods"
             getTest(org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG).apply {
+                linkerOpts("-ObjC")
+                linkerOpts("-force_load","${buildDir}/cocoapods/synthetic/IOS/Pods/yytestpod/yytestpod/Classes/library/libDebugLibrary.a")
                 linkerOpts("-framework", "DebugFramework","-F${fRootPath}/yytestpod/yytestpod/Classes")
-                linkerOpts("-L${fRootPath}/yytestpod/yytestpod/Classes/library","-lDebugLibrary")
-//                linkerOpts("-F${fRootPath}/yytestpod/yytestpod/Classes/library")
-//                linkerOpts("libraries","libDebugLibrary.a")
-//                linkerOpts("libraryPaths","${fRootPath}/yytestpod/yytestpod/Classes/library")
-//                linkerOpts("-rpath","${fRootPath}/yytestpod/yytestpod/Classes/library")
             }
         }
         it.compilations["main"].kotlinOptions.freeCompilerArgs += listOf(
@@ -117,7 +116,9 @@ gradle.taskGraph.whenReady {
                         else -> ""
                     }
                     val compilerOpts = when (taskSuffix) {
-                        "Yytestpod" -> "compilerOpts = -I${buildDir}/cocoapods/synthetic/IOS/Pods/yytestpod/yytestpod/Classes/DebugFramework.framework/Headers -I${buildDir}/cocoapods/synthetic/IOS/Pods/yytestpod/yytestpod/Classes/library/include/DebugLibrary"
+                        "Yytestpod" -> "compilerOpts = -I${buildDir}/cocoapods/synthetic/IOS/Pods/yytestpod/yytestpod/Classes/DebugFramework.framework/Headers -I${buildDir}/cocoapods/synthetic/IOS/Pods/yytestpod/yytestpod/Classes/library/include/DebugLibrary\n"// +
+//                                "staticLibraries = libDebugLibrary.a \n" +
+//                                "libraryPaths = ${buildDir}/cocoapods/synthetic/IOS/Pods/yytestpod/yytestpod/Classes/library"
                         else -> ""
                     }
                     outputFile.writeText(

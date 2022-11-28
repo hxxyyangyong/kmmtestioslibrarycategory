@@ -28,8 +28,8 @@ class IosGreetingTest {
         //----
         assertTrue(TTDemo.callTTDemoCategoryMethod() == "TTDemo+kmm categoryMethod","Framework Call TTDemo Category Method Error")
         assertTrue(TTDemo.callNSStrigCategoryMethod() == "NSString+kmm","Framework Call NSString Category Method Error")
-        assertTrue(DebugLibrary.debugCategoryMethod() == "libraryStringCategory","Library DebugLibrary Class Call NSString Category Method Error")
-        assertTrue(NSString.libraryStringCategory() == "libraryStringCategory","Call Library NSString Class Category Method Error")
+//        assertTrue(DebugLibrary.debugCategoryMethod() == "libraryStringCategory","Library DebugLibrary Class Call NSString Category Method Error")
+//        assertTrue(NSString.libraryStringCategory() == "libraryStringCategory","Call Library NSString Class Category Method Error")
     }
 
 
