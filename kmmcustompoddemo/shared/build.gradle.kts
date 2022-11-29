@@ -16,7 +16,7 @@ kotlin {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         version = "1.0"
-        ios.deploymentTarget = "11.0"
+        ios.deploymentTarget = "13.0"
         framework {
             baseName = "shared"
         }
@@ -35,10 +35,15 @@ kotlin {
 //        iosArm64(),
 //        iosSimulatorArm64()
     ).forEach {
+        val platform = if (it.targetName == "iosArm64") "iphoneos" else "iphonesimulator"
         it.binaries {
             val fRootPath = "${buildDir}/cocoapods/synthetic/IOS/Pods"
             getTest(org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG).apply {
+                linkerOpts("-L/usr/lib/swift")
+                linkerOpts("-rpath","/usr/lib/swift")
                 linkerOpts("-ObjC")
+                linkerOpts("-L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/${platform}")
+                linkerOpts("-rpath","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/${platform}")
                 linkerOpts("-force_load","${buildDir}/cocoapods/synthetic/IOS/Pods/yytestpod/yytestpod/Classes/library/libDebugLibrary.a")
                 linkerOpts("-framework", "DebugFramework","-F${fRootPath}/yytestpod/yytestpod/Classes")
             }
